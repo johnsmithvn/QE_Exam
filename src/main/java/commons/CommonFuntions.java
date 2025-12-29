@@ -28,6 +28,12 @@ public class CommonFuntions {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(newLocator)));
     }
 
+    public void waitToElementInvisible(WebDriver driver, String locator, String... values) {
+        String newLocator = getLocator(locator, values);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(newLocator)));
+    }
+
     public void sendkeyToElement(WebDriver driver, String locator, String valueInput, String... values) {
         String newLocator = getLocator(locator, values);
         driver.findElement(By.xpath(newLocator)).clear();
