@@ -3,10 +3,8 @@ package stepDefinitions;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 
-import cucumber.api.java.cs.A;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
-import cucumber.api.java.lu.a;
 import cucumberOption.Hooks;
 import pages.pageObjects.AdminPageObject;
 
@@ -42,6 +40,7 @@ public class AdminPageSteps {
     @Then("Verify new user is displayed in search results")
     public void verifyNewUserIsDisplayedInSearchResults() {
         Assert.assertTrue(adminPage.verifyNewUserIsDisplayedInSearchResults());
+        Assert.assertEquals(null, 0, 0);
 
     }
 

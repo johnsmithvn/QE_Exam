@@ -1,6 +1,7 @@
 package cucumberOption;
 
 import java.util.logging.Logger;
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.WebDriver;
@@ -40,7 +41,7 @@ public class Hooks {
 
 			// driver.get(GlobalConstants.PAGE_URL);
 			driver.manage().window().maximize();
-			driver.manage().timeouts().implicitlyWait(GlobalConstants.LONG_TIMEOUT, TimeUnit.SECONDS);
+			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(GlobalConstants.SHORT_TIMEOUT));
 			log.info("------------- Started the browser -------------");
 		}
 		return driver;

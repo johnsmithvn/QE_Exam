@@ -11,11 +11,14 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import commons.CommonFuntions;
+import commons.GlobalConstants;
 import pages.pageUIs.AdminPageUI;
 import pages.pageUIs.CommonPageUI;
 
 public class AdminPageObject extends CommonFuntions {
     WebDriver page;
+    String userName = "FakeUser" + generateRandomNumber(1000);
+    User newUser = new User(userName, "Abc@12345", "a", "Admin", "Enabled");
 
     class User {
         String userName;
@@ -49,18 +52,18 @@ public class AdminPageObject extends CommonFuntions {
 
     }
 
-    public void sendkeyToFieldInput(String fieldName, String valueInput) {
+    public void sendkeyToInputField(String fieldName, String valueInput) {
         waitToElementVisible(page, AdminPageUI.DYNAMIC_INPUT_FIELD, fieldName);
         sendkeyToElement(page, AdminPageUI.DYNAMIC_INPUT_FIELD, valueInput, fieldName);
     }
 
     public String selectEmployeeFromListBox() {
 
-        sendkeyToFieldInput("Employee Name", "a");
+        sendkeyToInputField("Employee Name", "a");
 
         waitToElementVisible(page, AdminPageUI.LIST_BOX_ITEM);
 
-        WebDriverWait wait = new WebDriverWait(page, Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(page, Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT));
         wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath(AdminPageUI.LIST_BOX_ITEM), 0));
 
         List<WebElement> allItems = page.findElements(By.xpath(AdminPageUI.LIST_BOX_ITEM));
@@ -74,10 +77,7 @@ public class AdminPageObject extends CommonFuntions {
         return item;
 
     }
-
-    String userName = "FakeUser" + generateRandomNumber(1000);
-    User newUser = new User(userName, "Abc@12345", "a", "Admin", "Enabled");
-
+  
     public void enteringValidInformation() {
         waitToElementVisible(page, AdminPageUI.ADD_USER_TITLE);
         // Select User Role
@@ -88,12 +88,11 @@ public class AdminPageObject extends CommonFuntions {
         // Select Status
         selectFromDropdown("Status", newUser.status);
         // Input Username
-
-        sendkeyToFieldInput("Username", newUser.userName);
+        sendkeyToInputField("Username", newUser.userName);
         // Input Password
-        sendkeyToFieldInput("Password", newUser.password);
+        sendkeyToInputField("Password", newUser.password);
         // Input Confirm Password
-        sendkeyToFieldInput("Confirm Password", newUser.password);
+        sendkeyToInputField("Confirm Password", newUser.password);
     }
 
     public void clickOnSaveButton() {

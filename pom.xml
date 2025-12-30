@@ -40,6 +40,13 @@
       <version>${selenium.version}</version>
     </dependency>
 
+    <dependency>
+      <groupId>io.rest-assured</groupId>
+      <artifactId>rest-assured</artifactId>
+      <version>5.4.0</version>
+    </dependency>
+
+
     <!-- WebDriverManager to auto-download browser drivers when Selenium Manager fails -->
     <dependency>
       <groupId>io.github.bonigarcia</groupId>

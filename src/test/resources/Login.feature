@@ -17,4 +17,10 @@ Feature: Login to the application
 
     
 
-
+@api
+  Scenario: Total open issues and top starred repo
+    Given org is "SeleniumHQ"
+    When I analyze org repos via GitHub API
+    Then total open issues should be >= 0
+    And I can find the repo with highest stars
+    And issues-only open count should be <= open_issues_count sum
