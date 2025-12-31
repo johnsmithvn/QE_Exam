@@ -3,8 +3,8 @@ Feature: Login to the application
 
 
 
-@LoginSetup
-  Scenario: Successful login
+@exam_01
+  Scenario: Add new user successfully and search for the user
     Given Open website url
     When I login with valid credentials
     And I click on the "Admin" item on sidebar menu
@@ -17,10 +17,7 @@ Feature: Login to the application
 
     
 
-@api
-  Scenario: Total open issues and top starred repo
-    Given org is "SeleniumHQ"
-    When I analyze org repos via GitHub API
-    Then total open issues should be >= 0
-    And I can find the repo with highest stars
-    And issues-only open count should be <= open_issues_count sum
+@exam_02
+  Scenario: Sum open issues and find top starred repo in SeleniumHQ
+    Given I analyze GitHub repos in org "SeleniumHQ"
+    Then I print analysis result

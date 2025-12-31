@@ -1,12 +1,10 @@
 package stepDefinitions;
 
-import static org.junit.Assert.assertEquals;
 
 import org.openqa.selenium.WebDriver;
 import pages.pageObjects.LoginPageObject;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
-import cucumber.api.java.en.Then;
 import cucumberOption.Hooks;
 
 public class LoginPageSteps {

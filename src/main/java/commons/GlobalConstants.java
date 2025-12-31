@@ -4,8 +4,8 @@ public class GlobalConstants {
 
 
     public static final String PAGE_URL = "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login";
-    
-    public static final String BASE_URL = "https://api.github.com";
+
+    public static final String GITHUB_API_URL = "https://api.github.com";
 
 
     public static final String DOWNLOAD_FOLDER = System.getProperty("user.dir") + "/downloads";
