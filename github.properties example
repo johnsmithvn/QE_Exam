@@ -1,0 +1,3 @@
+# GitHub API Configuration
+# Paste your GitHub Personal Access Token here
+github.token=YOUR_GITHUB_TOKEN_HERE

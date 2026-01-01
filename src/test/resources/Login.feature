@@ -18,6 +18,9 @@ Feature: Login to the application
     
 
 @exam_02
-  Scenario: Sum open issues and find top starred repo in SeleniumHQ
-    Given I analyze GitHub repos in org "SeleniumHQ"
-    Then I print analysis result
+  Scenario: Analyze SeleniumHQ GitHub organization
+    Given I call the GitHub REST API for organization "SeleniumHQ"
+    When I calculate the total number of open issues across all repositories
+    And I determine the highest-rated repository by the highest number of stars
+    Then I print the GitHub analysis result
+   

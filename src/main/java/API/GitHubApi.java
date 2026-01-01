@@ -5,8 +5,11 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 public class GitHubApi {
 
@@ -26,6 +29,12 @@ public class GitHubApi {
                     .queryParam("page", page)
                     .get();
 
+            // Debug: in ra status code và body nếu không phải 200
+            if (response.getStatusCode() != 200) {
+                System.err.println("GitHub API Error - Status: " + response.getStatusCode());
+                System.err.println("Response body: " + response.getBody().asString());
+            }
+
             response.then().statusCode(200);
 
             List<Map<String, Object>> repos = response.jsonPath().getList("$");
@@ -35,7 +44,6 @@ public class GitHubApi {
 
             for (Map<String, Object> repo : repos) {
                 totalOpenIssues += toInt(repo.get("open_issues_count"));
-
                 int stars = toInt(repo.get("stargazers_count"));
                 if (stars > maxStars) {
                     maxStars = stars;
@@ -52,8 +60,27 @@ public class GitHubApi {
     private RequestSpecification buildRequest() {
         RequestSpecification req = RestAssured.given()
                 .header("Accept", "application/vnd.github+json")
-                .header("X-GitHub-Api-Version", "2022-11-28");
+                .header("X-GitHub-Api-Version", "2022-11-28")
+                .header("User-Agent", "test");
+        
+        // Đọc token từ file github.properties
+        String token = loadGitHubToken();
+        if (token != null && !token.trim().isEmpty() && !token.contains("YOUR_GITHUB_TOKEN")) {
+            req.header("Authorization", "Bearer " + token.trim());
+        }
+        
         return req;
+    }
+
+    private String loadGitHubToken() {
+        Properties props = new Properties();
+        try (FileInputStream fis = new FileInputStream("github.properties")) {
+            props.load(fis);
+            return props.getProperty("github.token");
+        } catch (IOException e) {
+            // File không tồn tại hoặc lỗi đọc - không sao, chạy không token
+            return null;
+        }
     }
 
     private int toInt(Object v) {

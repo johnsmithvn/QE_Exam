@@ -40,7 +40,6 @@ public class AdminPageSteps {
     @Then("Verify new user is displayed in search results")
     public void verifyNewUserIsDisplayedInSearchResults() {
         Assert.assertTrue(adminPage.verifyNewUserIsDisplayedInSearchResults());
-        Assert.assertEquals(null, 0, 0);
 
     }
 
