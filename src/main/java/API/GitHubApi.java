@@ -13,50 +13,6 @@ import java.util.Properties;
 
 public class GitHubApi {
 
-    public RepoResult analyzeOrgRepos(String org) {
-        int page = 1;
-        int totalOpenIssues = 0;
-        int maxStars = 0;
-        String bestRepoName = "";
-        int totalRepos = 0;
-
-        while (true) {
-            Response response = buildRequest()
-                    .baseUri(GlobalConstants.GITHUB_API_URL)
-                    .basePath("/orgs/{org}/repos")
-                    .pathParam("org", org)
-                    .queryParam("per_page", 100)
-                    .queryParam("page", page)
-                    .get();
-
-            // Debug: in ra status code và body nếu không phải 200
-            if (response.getStatusCode() != 200) {
-                System.err.println("GitHub API Error - Status: " + response.getStatusCode());
-                System.err.println("Response body: " + response.getBody().asString());
-            }
-
-            response.then().statusCode(200);
-
-            List<Map<String, Object>> repos = response.jsonPath().getList("$");
-            if (repos == null || repos.isEmpty()) break;
-
-            totalRepos += repos.size();
-
-            for (Map<String, Object> repo : repos) {
-                totalOpenIssues += toInt(repo.get("open_issues_count"));
-                int stars = toInt(repo.get("stargazers_count"));
-                if (stars > maxStars) {
-                    maxStars = stars;
-                    bestRepoName = String.valueOf(repo.get("name"));
-                }
-            }
-
-            page++;
-        }
-
-        return new RepoResult(org, totalRepos, totalOpenIssues, bestRepoName, maxStars);
-    }
-
     private RequestSpecification buildRequest() {
         RequestSpecification req = RestAssured.given()
                 .header("Accept", "application/vnd.github+json")
@@ -78,7 +34,6 @@ public class GitHubApi {
             props.load(fis);
             return props.getProperty("github.token");
         } catch (IOException e) {
-            // File không tồn tại hoặc lỗi đọc - không sao, chạy không token
             return null;
         }
     }
@@ -90,4 +45,62 @@ public class GitHubApi {
         if (v instanceof Double) return ((Double) v).intValue();
         return Integer.parseInt(v.toString());
     }
+
+
+    public List<Map<String, Object>> fetchAllRepos(String org) {
+        List<Map<String, Object>> allRepos = new java.util.ArrayList<>();
+        int page = 1;
+
+        while (true) {
+            Response response = buildRequest()
+                    .baseUri(GlobalConstants.GITHUB_API_URL)
+                    .basePath("/orgs/{org}/repos")
+                    .pathParam("org", org)
+                    .queryParam("per_page", 100)
+                    .queryParam("page", page)
+                    .get();
+
+            if (response.getStatusCode() != 200) {
+                System.err.println("GitHub API Error - Status: " + response.getStatusCode());
+                System.err.println("Response body: " + response.getBody().asString());
+            }
+
+            response.then().statusCode(200);
+
+            List<Map<String, Object>> repos = response.jsonPath().getList("$");
+            if (repos == null || repos.isEmpty()) break;
+
+            allRepos.addAll(repos);
+            page++;
+        }
+
+        return allRepos;
+    }
+
+    // Tính tổng open issues từ danh sách repos
+    public int calculateTotalOpenIssues(List<Map<String, Object>> repos) {
+        int total = 0;
+        for (Map<String, Object> repo : repos) {
+            total += toInt(repo.get("open_issues_count"));
+        }
+        return total;
+    }
+
+    // Tìm repo có nhiều stars nhất
+    public Map<String, Object> findTopStarredRepo(List<Map<String, Object>> repos) {
+        Map<String, Object> topRepo = null;
+        int maxStars = 0;
+
+        for (Map<String, Object> repo : repos) {
+            int stars = toInt(repo.get("stargazers_count"));
+            if (stars > maxStars) {
+                maxStars = stars;
+                topRepo = repo;
+            }
+        }
+
+        return topRepo;
+    }
+
+
 }

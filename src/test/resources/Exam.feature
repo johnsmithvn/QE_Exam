@@ -1,4 +1,4 @@
-@Login
+@exam
 Feature: Login to the application
 
 
@@ -13,7 +13,7 @@ Feature: Login to the application
     And I click on the Save button
     Then Verify new user is created successfully
     And I search for the new user by username
-    Then Verify new user is displayed in search results
+    And Verify new user is displayed in search results
 
     
 

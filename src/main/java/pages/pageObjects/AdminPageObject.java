@@ -16,10 +16,9 @@ import pages.pageUIs.CommonPageUI;
 
 public class AdminPageObject extends CommonFuntions {
     WebDriver page;
-    String userName = "FakeUser" + generateRandomNumber(1000);
-    User newUser = new User(userName, "Abc@12345", "a", "Admin", "Enabled");
+    public User newUser;
 
-    class User {
+    public class User {
         String userName;
         String password;
         String employeeName;
@@ -34,11 +33,28 @@ public class AdminPageObject extends CommonFuntions {
             this.status = status;
         }
 
+        public String getUserName() {
+            return userName;
+        }
+
+        public String getEmployeeName() {
+            return employeeName;
+        }
+
+        public String getUserRole() {
+            return userRole;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
     }
 
     public AdminPageObject(WebDriver driver) {
         page = driver;
     }
+
 
     public void selectFromDropdown(String fieldName, String value) {
         // Click drop down menu
@@ -76,8 +92,10 @@ public class AdminPageObject extends CommonFuntions {
         return item;
 
     }
-  
+
     public void enteringValidInformation() {
+
+        newUser = new User("FakeUser" + generateRandomNumber(1000), "Abc@12345", "a", "Admin", "Enabled");
         waitToElementVisible(page, AdminPageUI.ADD_USER_TITLE);
         // Select User Role
         selectFromDropdown("User Role", newUser.userRole);
@@ -88,6 +106,8 @@ public class AdminPageObject extends CommonFuntions {
         selectFromDropdown("Status", newUser.status);
         // Input Username
         sendkeyToInputField("Username", newUser.userName);
+        // wait for input error message disappear
+        waitToElementInvisible(page, AdminPageUI.INPUT_ERROR_MSG, "Username");
         // Input Password
         sendkeyToInputField("Password", newUser.password);
         // Input Confirm Password
@@ -111,9 +131,32 @@ public class AdminPageObject extends CommonFuntions {
 
     public boolean verifyNewUserIsDisplayedInSearchResults() {
 
-        waitToElementInvisible(page, AdminPageUI.TABLE_SPINNER );
+        waitToElementInvisible(page, AdminPageUI.TABLE_SPINNER);
         List<WebElement> allRows = page.findElements(By.xpath(AdminPageUI.TABLE_ROW));
-        return allRows.size() ==1;
+        return allRows.size() == 1;
     }
 
+    public String getAllTableValue() {
+        waitToElementInvisible(page, AdminPageUI.TABLE_SPINNER);
+        List<WebElement> allRows = page.findElements(By.xpath(AdminPageUI.TABLE_ROW));
+        String allValues = "";
+        for (WebElement row : allRows) {
+            allValues += row.getText() + "\n";
+        }
+
+        return allValues;
+    }
+
+    public String getValueOnTableCell(int rowIndex, int cellIndex) {
+        String cellLocator = getLocator(AdminPageUI.TABLE_CELL, String.valueOf(rowIndex), String.valueOf(cellIndex));
+        waitToElementVisible(page, cellLocator);
+        return page.findElement(By.xpath(cellLocator)).getText();
+
+    }
+
+
+    public boolean isAdminPageDisplayed() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'isAdminPageDisplayed'");
+    }
 }

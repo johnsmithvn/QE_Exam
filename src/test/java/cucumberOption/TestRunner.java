@@ -10,7 +10,7 @@ import cucumber.api.SnippetType;
 @CucumberOptions(features = "src/test/resources/", glue = "stepDefinitions", monochrome = true, dryRun = false, plugin = {
                 "pretty", "html:target/cucumber-html-report",
                 "json:target/site/test.json" }, snippets = SnippetType.CAMELCASE, 
-                tags = "@exam_02")
+                tags = "@exam")
 
 public class TestRunner {
 

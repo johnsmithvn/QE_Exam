@@ -3,7 +3,6 @@ package cucumberOption;
 import java.util.logging.Logger;
 import java.time.Duration;
 import java.util.HashMap;
-import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -30,8 +29,6 @@ public class Hooks {
 				options.addArguments("--disable-notifications");
 				HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
 				chromePrefs.put("profile.default_content_settings.popups", 0);
-				// chromePrefs.put("download.default_directory",
-				// GlobalConstants.DOWNLOAD_FOLDER);
 				options.setExperimentalOption("prefs", chromePrefs);
 				driver = new ChromeDriver(options);
 
