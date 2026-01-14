@@ -39,7 +39,6 @@ public class AdminPageSteps {
     @Then("Verify new user is displayed in search results")
     public void verifyNewUserIsDisplayedInSearchResults() {
         Assert.assertTrue(adminPage.verifyNewUserIsDisplayedInSearchResults());
-        // User name with index = 2;
         Assert.assertEquals(adminPage.getValueOnTableCell(1, 2), adminPage.newUser.getUserName());
         Assert.assertEquals(adminPage.getValueOnTableCell(1, 3), adminPage.newUser.getUserRole());
         Assert.assertEquals(adminPage.getValueOnTableCell(1, 4), adminPage.newUser.getEmployeeName());

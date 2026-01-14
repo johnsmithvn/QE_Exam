@@ -12,6 +12,17 @@ import java.util.Map;
 import java.util.Properties;
 
 public class GitHubApi {
+    
+    // l
+    private String loadGitHubToken() {
+        Properties props = new Properties();
+        try (FileInputStream fis = new FileInputStream("github.properties")) {
+            props.load(fis);
+            return props.getProperty("github.token");
+        } catch (IOException e) {
+            return null;
+        }
+    }
 
     private RequestSpecification buildRequest() {
         RequestSpecification req = RestAssured.given()
@@ -28,15 +39,6 @@ public class GitHubApi {
         return req;
     }
 
-    private String loadGitHubToken() {
-        Properties props = new Properties();
-        try (FileInputStream fis = new FileInputStream("github.properties")) {
-            props.load(fis);
-            return props.getProperty("github.token");
-        } catch (IOException e) {
-            return null;
-        }
-    }
 
     private int toInt(Object v) {
         if (v == null) return 0;
@@ -47,6 +49,7 @@ public class GitHubApi {
     }
 
 
+    // Get all repos for an org with pagination
     public List<Map<String, Object>> fetchAllRepos(String org) {
         List<Map<String, Object>> allRepos = new java.util.ArrayList<>();
         int page = 1;
@@ -77,7 +80,7 @@ public class GitHubApi {
         return allRepos;
     }
 
-    // Tính tổng open issues từ danh sách repos
+    // Calculate total open issues across all repos
     public int calculateTotalOpenIssues(List<Map<String, Object>> repos) {
         int total = 0;
         for (Map<String, Object> repo : repos) {
@@ -86,7 +89,7 @@ public class GitHubApi {
         return total;
     }
 
-    // Tìm repo có nhiều stars nhất
+    // Find the repo with the most stars
     public Map<String, Object> findTopStarredRepo(List<Map<String, Object>> repos) {
         Map<String, Object> topRepo = null;
         int maxStars = 0;

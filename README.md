@@ -96,7 +96,7 @@ View the detailed Cucumber HTML report:
 2. Or view JSON report at `target/site/test.json`
 
 **Test Report includes:**
-- ✅ Scenario pass/fail status
+- Scenario pass/fail status
 - Step-by-step execution details
 - Execution time
 - Screenshots (if configured)
@@ -138,11 +138,5 @@ QE_Exam/
 - **JUnit** - Assertions
 - **Maven** - Build tool
 - **WebDriverManager** - Automatic driver management
-
-
-### Build Errors
-- Verify JDK version: `java -version` (should be 8+)
-- Verify Maven version: `mvn -version` (should be 3.6+)
-- Clean and rebuild: `mvn clean compile`
 
 

@@ -7,9 +7,6 @@ public class GlobalConstants {
 
     public static final String GITHUB_API_URL = "https://api.github.com";
 
-
-    public static final String DOWNLOAD_FOLDER = System.getProperty("user.dir") + "/downloads";
-
     public static final int SHORT_TIMEOUT = 5;
     public static final int LONG_TIMEOUT = 30;
 

@@ -153,10 +153,5 @@ public class AdminPageObject extends CommonFuntions {
         return page.findElement(By.xpath(cellLocator)).getText();
 
     }
-
-
-    public boolean isAdminPageDisplayed() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isAdminPageDisplayed'");
-    }
+ 
 }

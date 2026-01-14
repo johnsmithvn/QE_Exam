@@ -1,5 +1,5 @@
 @exam
-Feature: Login to the application
+Feature: Exam Scenarios
 
 
 
