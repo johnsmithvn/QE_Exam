@@ -101,33 +101,6 @@ View the detailed Cucumber HTML report:
 - Execution time
 - Screenshots (if configured)
 
-## Project Structure
-
-```
-QE_Exam/
-├── src/
-│   ├── main/java/
-│   │   ├── API/
-│   │   │   ├── GitHubApi.java          # GitHub REST API client
-│   │   │   └── RepoResult.java         # Result model
-│   │   ├── commons/
-│   │   │   ├── CommonFuntions.java     # Reusable utilities
-│   │   │   └── GlobalConstants.java    # Configuration constants
-│   │   └── pages/
-│   │       ├── pageObjects/            # Page Object classes
-│   │       └── pageUIs/                # Page locators
-│   └── test/
-│       ├── java/
-│       │   ├── cucumberOption/
-│       │   │   ├── Hooks.java          # Browser setup/teardown
-│       │   │   └── TestRunner.java     # Cucumber test runner
-│       │   └── stepDefinitions/        # Gherkin step implementations
-│       └── resources/
-│           └── Login.feature           # BDD test scenarios
-├── github.properties                    # GitHub token configuration
-├── pom.xml                             # Maven dependencies
-└── README.md                           # This file
-```
 
 ## Technologies Used
 
