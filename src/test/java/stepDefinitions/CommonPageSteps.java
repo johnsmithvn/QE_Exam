@@ -2,7 +2,7 @@ package stepDefinitions;
 
 import org.openqa.selenium.WebDriver;
 
-import cucumber.api.java.en.And;
+import io.cucumber.java.en.And;
 import cucumberOption.Hooks;
 import pages.pageObjects.CommonPage;
 

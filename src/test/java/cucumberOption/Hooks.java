@@ -10,7 +10,8 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 import commons.GlobalConstants;
-import cucumber.api.java.Before;
+import io.cucumber.java.Before;
+
 
 public class Hooks {
 	private static WebDriver driver;

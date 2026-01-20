@@ -3,8 +3,8 @@ package stepDefinitions;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Then;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
 import cucumberOption.Hooks;
 import pages.pageObjects.AdminPageObject;
 
