@@ -154,4 +154,15 @@ public class AdminPageObject extends CommonFuntions {
 
     }
  
+
+    public String removeMiddleName(String fullName) {
+        String[] name  = fullName.split(" ");
+        if (name.length <= 2) {
+            return fullName;
+        }
+
+        return name[0] + " " + name[name.length - 1];
+
+
+    }
 }

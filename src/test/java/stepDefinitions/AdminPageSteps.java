@@ -41,9 +41,10 @@ public class AdminPageSteps {
         Assert.assertTrue(adminPage.verifyNewUserIsDisplayedInSearchResults());
         Assert.assertEquals(adminPage.getValueOnTableCell(1, 2), adminPage.newUser.getUserName());
         Assert.assertEquals(adminPage.getValueOnTableCell(1, 3), adminPage.newUser.getUserRole());
-        Assert.assertEquals(adminPage.getValueOnTableCell(1, 4), adminPage.newUser.getEmployeeName());
+        // employee name not middle name in results
+        String employeeNameWithoutMiddle = adminPage.removeMiddleName(adminPage.newUser.getEmployeeName());
+        Assert.assertEquals(adminPage.getValueOnTableCell(1, 4), employeeNameWithoutMiddle);
         Assert.assertEquals(adminPage.getValueOnTableCell(1, 5), adminPage.newUser.getStatus());
-      
     }
 
    
