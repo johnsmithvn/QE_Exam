@@ -81,7 +81,9 @@ public class AdminPageSteps {
     @And("I delete the new user")
     public void iDeleteTheNewUser() {
         adminPage.deleteUserInFirstRow();
-        Assert.assertTrue("Delete success message should be displayed", adminPage.isSuccessMessageDisplayed());
+        // Kiểm tra bằng kết quả thật (user không còn trong bảng) thay vì chỉ dựa vào toast, vì toast "Success"
+        // của bước tạo user có thể vẫn còn hiển thị.
+        Assert.assertTrue("Deleted user should no longer be listed", adminPage.isNoUserDisplayedInSearchResults());
     }
 
 

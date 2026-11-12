@@ -245,6 +245,11 @@ public class AdminPageObject extends BasePage {
         click(CommonPageUI.DYNAMIC_BUTTON, "Yes, Delete");
     }
 
+    // [REFACTOR] MỚI: sau khi xóa, bảng (vẫn đang lọc theo username đó) phải không còn dòng nào.
+    public boolean isNoUserDisplayedInSearchResults() {
+        return waitForElementCount(0, AdminPageUI.TABLE_ROW);
+    }
+
     public String removeMiddleName(String fullName) {
         String[] name  = fullName.split(" ");
         if (name.length <= 2) {

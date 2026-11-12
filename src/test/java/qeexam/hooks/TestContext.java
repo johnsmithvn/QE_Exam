@@ -64,7 +64,11 @@ public class TestContext {
         }
 
         WebDriver newDriver = new ChromeDriver(options);
-        newDriver.manage().window().maximize();
+        // Headless không có màn hình thật: maximize() sẽ thu cửa sổ về kích thước mặc định 800x600, khiến
+        // OrangeHRM chuyển sang giao diện mobile (ẩn khung lọc). Khi headless, kích thước lấy từ --window-size.
+        if (!extraArgs.contains("--headless")) {
+            newDriver.manage().window().maximize();
+        }
         return newDriver;
     }
 }
