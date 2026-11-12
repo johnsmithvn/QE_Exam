@@ -1,4 +1,6 @@
-package commons;
+package qeexam.commons;
+
+// [REFACTOR] ĐỔI PACKAGE: commons -> qeexam.commons (tên package Java viết thường toàn bộ, nằm dưới package gốc qeexam).
 
 // [REFACTOR] TOÀN BỘ LỚP NÀY ĐÃ ĐƯỢC THAY BẰNG commons.BasePage. Code cũ giữ lại bên dưới để đối chiếu.
 //

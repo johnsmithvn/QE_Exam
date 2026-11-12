@@ -1,4 +1,6 @@
-package pages.pageObjects;
+package qeexam.pages.pageobjects;
+
+// [REFACTOR] ĐỔI PACKAGE: pages.pageObjects -> qeexam.pages.pageobjects (tên package Java viết thường toàn bộ, nằm dưới package gốc qeexam).
 
 // [REFACTOR] CŨ: các import chỉ phục vụ code đã được thay thế.
 // import java.time.Duration;
@@ -12,10 +14,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import commons.BasePage;
-import models.User;
-import pages.pageUIs.AdminPageUI;
-import pages.pageUIs.CommonPageUI;
+import qeexam.commons.BasePage;
+import qeexam.models.User;
+import qeexam.pages.pageuis.AdminPageUI;
+import qeexam.pages.pageuis.CommonPageUI;
 
 // [REFACTOR] CŨ:
 // public class AdminPageObject extends CommonFuntions {
@@ -84,7 +86,8 @@ public class AdminPageObject extends BasePage {
         click(AdminPageUI.DYNAMIC_ITEM, value);
     }
 
-    public void sendkeyToInputField(String fieldName, String valueInput) {
+    // [REFACTOR] ĐỔI TÊN HÀM: sendkeyToInputField -> enterTextIntoField (mô tả hành động người dùng thay vì tên API Selenium).
+    public void enterTextIntoField(String fieldName, String valueInput) {
         // [REFACTOR] CŨ:
         // waitToElementVisible(page, AdminPageUI.DYNAMIC_INPUT_FIELD, fieldName);
         // sendkeyToElement(page, AdminPageUI.DYNAMIC_INPUT_FIELD, valueInput, fieldName);
@@ -92,9 +95,10 @@ public class AdminPageObject extends BasePage {
         type(AdminPageUI.DYNAMIC_INPUT_FIELD, valueInput, fieldName);
     }
 
-    public String selectEmployeeFromListBox() {
+    // [REFACTOR] ĐỔI TÊN HÀM: selectEmployeeFromListBox -> selectRandomEmployee (nói rõ là chọn NGẪU NHIÊN một nhân viên).
+    public String selectRandomEmployee() {
 
-        sendkeyToInputField("Employee Name", "a");
+        enterTextIntoField("Employee Name", "a");
 
         // [REFACTOR] CŨ: chờ 2 lần, lấy text của một item ngẫu nhiên rồi lặp lại cả danh sách để tìm
         // item có text đó. Nếu 2 nhân viên trùng tên thì có thể click nhầm item khác với item đã chọn.
@@ -145,25 +149,27 @@ public class AdminPageObject extends BasePage {
     //     sendkeyToInputField("Confirm Password", newUser.password);
     // }
     // [REFACTOR] MỚI: nhận User từ step (step tạo dữ liệu, xem AdminPageSteps). Thứ tự thao tác giữ nguyên.
-    public void enteringValidInformation(User user) {
+    // [REFACTOR] ĐỔI TÊN HÀM: enteringValidInformation -> fillAddUserForm (tên hàm nên là động từ nguyên thể và nói rõ form nào).
+    public void fillAddUserForm(User user) {
         waitForVisible(AdminPageUI.ADD_USER_TITLE);
         // Select User Role
         selectFromDropdown("User Role", user.getUserRole());
         // Input Employee Name
-        user.setEmployeeName(selectEmployeeFromListBox());
+        user.setEmployeeName(selectRandomEmployee());
         // Select Status
         selectFromDropdown("Status", user.getStatus());
         // Input Username
-        sendkeyToInputField("Username", user.getUserName());
+        enterTextIntoField("Username", user.getUserName());
         // wait for input error message disappear
         waitForInvisible(AdminPageUI.INPUT_ERROR_MSG, "Username");
         // Input Password
-        sendkeyToInputField("Password", user.getPassword());
+        enterTextIntoField("Password", user.getPassword());
         // Input Confirm Password
-        sendkeyToInputField("Confirm Password", user.getPassword());
+        enterTextIntoField("Confirm Password", user.getPassword());
     }
 
-    public void clickOnSaveButton() {
+    // [REFACTOR] ĐỔI TÊN HÀM: clickOnSaveButton -> clickSaveButton (thống nhất mẫu click<Tên>Button).
+    public void clickSaveButton() {
         // [REFACTOR] CŨ:
         // waitToElementClickable(page, AdminPageUI.SAVE_BUTTON);
         // clickToElement(page, AdminPageUI.SAVE_BUTTON);
@@ -191,7 +197,9 @@ public class AdminPageObject extends BasePage {
         click(CommonPageUI.DYNAMIC_BUTTON, "Search");
     }
 
-    public boolean verifyNewUserIsDisplayedInSearchResults() {
+    // [REFACTOR] ĐỔI TÊN HÀM: verifyNewUserIsDisplayedInSearchResults -> isOnlyOneUserDisplayedInSearchResults
+    // (hàm trả về boolean nên đặt tên dạng is...; việc "verify" là của step, không phải của page object).
+    public boolean isOnlyOneUserDisplayedInSearchResults() {
 
         // [REFACTOR] CŨ: chờ spinner biến mất rồi đếm dòng một lần. Nếu spinner chưa kịp hiện sau khi bấm
         // Search thì "đã biến mất" đúng ngay lập tức và đếm phải bảng cũ (chưa lọc). Trước đây implicit wait
@@ -203,7 +211,8 @@ public class AdminPageObject extends BasePage {
         return waitForElementCount(1, AdminPageUI.TABLE_ROW);
     }
 
-    public String getAllTableValue() {
+    // [REFACTOR] ĐỔI TÊN HÀM: getAllTableValue -> getAllTableValues (trả về nhiều giá trị nên dùng số nhiều).
+    public String getAllTableValues() {
         // [REFACTOR] CŨ:
         // waitToElementInvisible(page, AdminPageUI.TABLE_SPINNER);
         // List<WebElement> allRows = page.findElements(By.xpath(AdminPageUI.TABLE_ROW));
@@ -218,7 +227,8 @@ public class AdminPageObject extends BasePage {
         return allValues;
     }
 
-    public String getValueOnTableCell(int rowIndex, int cellIndex) {
+    // [REFACTOR] ĐỔI TÊN HÀM: getValueOnTableCell -> getTableCellText (nói rõ giá trị trả về là text của ô).
+    public String getTableCellText(int rowIndex, int cellIndex) {
         // [REFACTOR] CŨ:
         // String cellLocator = getLocator(AdminPageUI.TABLE_CELL, String.valueOf(rowIndex), String.valueOf(cellIndex));
         // waitToElementVisible(page, cellLocator);

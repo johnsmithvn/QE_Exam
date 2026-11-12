@@ -19,7 +19,7 @@
 2. **Configure GitHub Token (for API tests)**
    - Create a Personal Access Token at: https://github.com/settings/tokens
    - Select scope: `public_repo` (read access to public repositories)
-   - Copy the file `github.properties example` in the project root to `github.properties`
+   - Copy the file `github.properties.example` in the project root to `github.properties`
      (this file is git-ignored, so the token is never committed)
    - Replace `YOUR_GITHUB_TOKEN_HERE` with your actual token:
      ```properties
@@ -83,7 +83,7 @@ mvn clean test -Dcucumber.filter.tags="@exam_01" -Dchrome.args=--headless=new,--
    - Click Finish
 
 2. **Run tests:**
-   - Navigate to `src/test/java/cucumberOption/TestRunner.java`
+   - Navigate to `src/test/java/qeexam/runners/TestRunner.java`
    - Right-click on the file
    - Select **Run As → JUnit Test**
    - Tests will execute and results will appear in JUnit view
@@ -136,6 +136,29 @@ View the detailed Cucumber HTML report:
 - Execution time
 - Screenshot of the browser when a UI scenario fails
 
+
+## Project Structure
+
+```
+src/main/java/qeexam/
+├── api/                  GitHub REST client and its data classes (GitHubApi, Repo, RepoResult)
+├── commons/              Shared framework code (BasePage, ConfigReader, GlobalConstants)
+├── models/               Test data objects (User)
+└── pages/
+    ├── pageobjects/      Page actions (LoginPageObject, AdminPageObject, CommonPageObject)
+    └── pageuis/          XPath locators of each page (LoginPageUI, AdminPageUI, CommonPageUI)
+
+src/test/java/qeexam/
+├── runners/              JUnit entry point (TestRunner)
+├── hooks/                Browser life cycle per scenario (Hooks, TestContext)
+└── stepdefinitions/      Cucumber step definitions
+
+src/test/resources/
+├── config.properties     URL and account for the UI test
+└── features/
+    ├── ui/               orangehrm_user_management.feature   (@exam_01)
+    └── api/              github_organization_analysis.feature (@exam_02)
+```
 
 ## Technologies Used
 

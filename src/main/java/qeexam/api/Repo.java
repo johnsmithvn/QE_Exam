@@ -1,4 +1,6 @@
-package API;
+package qeexam.api;
+
+// [REFACTOR] ĐỔI PACKAGE: API -> qeexam.api (tên package Java viết thường toàn bộ, nằm dưới package gốc qeexam).
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

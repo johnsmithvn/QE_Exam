@@ -1,7 +1,9 @@
-package API;
+package qeexam.api;
 
-import commons.ConfigReader;
-import commons.GlobalConstants;
+// [REFACTOR] ĐỔI PACKAGE: API -> qeexam.api (tên package Java viết thường toàn bộ, nằm dưới package gốc qeexam).
+
+import qeexam.commons.ConfigReader;
+import qeexam.commons.GlobalConstants;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;

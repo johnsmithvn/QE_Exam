@@ -1,4 +1,6 @@
-package pages.pageUIs;
+package qeexam.pages.pageuis;
+
+// [REFACTOR] ĐỔI PACKAGE: pages.pageUIs -> qeexam.pages.pageuis (tên package Java viết thường toàn bộ, nằm dưới package gốc qeexam).
 
 public class AdminPageUI {
     public static final String ADD_BUTTON = "//button[text()=' Add ']";

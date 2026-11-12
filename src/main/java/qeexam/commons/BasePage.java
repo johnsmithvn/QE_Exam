@@ -1,4 +1,6 @@
-package commons;
+package qeexam.commons;
+
+// [REFACTOR] ĐỔI PACKAGE: commons -> qeexam.commons (tên package Java viết thường toàn bộ, nằm dưới package gốc qeexam).
 
 import java.time.Duration;
 import java.util.List;

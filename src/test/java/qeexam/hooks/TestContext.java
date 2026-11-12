@@ -1,4 +1,6 @@
-package cucumberOption;
+package qeexam.hooks;
+
+// [REFACTOR] ĐỔI PACKAGE: cucumberOption -> qeexam.hooks (tên package Java viết thường toàn bộ, nằm dưới package gốc qeexam).
 
 import java.util.HashMap;
 

@@ -1,14 +1,16 @@
-package stepDefinitions;
+package qeexam.stepdefinitions;
+
+// [REFACTOR] ĐỔI PACKAGE: stepDefinitions -> qeexam.stepdefinitions (tên package Java viết thường toàn bộ, nằm dưới package gốc qeexam).
 
 
 import org.openqa.selenium.WebDriver;
-import pages.pageObjects.LoginPageObject;
+import qeexam.pages.pageobjects.LoginPageObject;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 // [REFACTOR] CŨ:
 // import cucumberOption.Hooks;
-import commons.ConfigReader;
-import cucumberOption.TestContext;
+import qeexam.commons.ConfigReader;
+import qeexam.hooks.TestContext;
 
 public class LoginPageSteps {
     WebDriver driver;
@@ -28,7 +30,7 @@ public class LoginPageSteps {
 
     @Given("Open website url")
     public void openWebsiteUrl() {
-        loginPage.goToPage();
+        loginPage.open();
     }
 
     @When("I login with valid credentials")
@@ -36,7 +38,7 @@ public class LoginPageSteps {
         // [REFACTOR] CŨ: tài khoản nằm cứng trong code.
         // loginPage.loginToTheWebsite("admin", "admin123");
         // [REFACTOR] MỚI: đọc từ config.properties (ui.username / ui.password), ghi đè được bằng -D.
-        loginPage.loginToTheWebsite(ConfigReader.get("ui.username"), ConfigReader.get("ui.password"));
+        loginPage.login(ConfigReader.get("ui.username"), ConfigReader.get("ui.password"));
   
     }
 

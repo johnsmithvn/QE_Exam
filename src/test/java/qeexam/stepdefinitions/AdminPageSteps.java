@@ -1,4 +1,6 @@
-package stepDefinitions;
+package qeexam.stepdefinitions;
+
+// [REFACTOR] ĐỔI PACKAGE: stepDefinitions -> qeexam.stepdefinitions (tên package Java viết thường toàn bộ, nằm dưới package gốc qeexam).
 
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
@@ -7,9 +9,9 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 // [REFACTOR] CŨ:
 // import cucumberOption.Hooks;
-import cucumberOption.TestContext;
-import models.User;
-import pages.pageObjects.AdminPageObject;
+import qeexam.hooks.TestContext;
+import qeexam.models.User;
+import qeexam.pages.pageobjects.AdminPageObject;
 
 public class AdminPageSteps {
     WebDriver driver;
@@ -30,8 +32,8 @@ public class AdminPageSteps {
     }
 
     @And("I click on the Save button")
-    public void clickOnSaveButton() {
-        adminPage.clickOnSaveButton();
+    public void clickSaveButton() {
+        adminPage.clickSaveButton();
     }
 
     @And("I fill in the add user form with valid data")
@@ -41,7 +43,7 @@ public class AdminPageSteps {
         // [REFACTOR] MỚI: step tạo dữ liệu rồi truyền vào page. Username gắn timestamp (mili giây) nên
         // không trùng giữa các lần chạy; độ dài 21 ký tự, trong giới hạn 5-40 của OrangeHRM.
         newUser = new User("FakeUser" + System.currentTimeMillis(), "Abc@12345", "a", "Admin", "Enabled");
-        adminPage.enteringValidInformation(newUser);
+        adminPage.fillAddUserForm(newUser);
 
     }
     @Then("Verify new user is created successfully")
@@ -57,7 +59,7 @@ public class AdminPageSteps {
     }
     @Then("Verify new user is displayed in search results")
     public void verifyNewUserIsDisplayedInSearchResults() {
-        Assert.assertTrue(adminPage.verifyNewUserIsDisplayedInSearchResults());
+        Assert.assertTrue(adminPage.isOnlyOneUserDisplayedInSearchResults());
         // [REFACTOR] CŨ: đọc dữ liệu mong đợi từ adminPage.newUser.
         // Assert.assertEquals(adminPage.getValueOnTableCell(1, 2), adminPage.newUser.getUserName());
         // Assert.assertEquals(adminPage.getValueOnTableCell(1, 3), adminPage.newUser.getUserRole());
@@ -67,12 +69,12 @@ public class AdminPageSteps {
         // Assert.assertEquals(adminPage.getValueOnTableCell(1, 5), adminPage.newUser.getStatus());
         // [REFACTOR] MỚI: đọc từ newUser của step. Đồng thời đổi thứ tự tham số thành (expected, actual)
         // đúng quy ước JUnit, để khi fail thông báo "expected ... but was ..." không bị ngược.
-        Assert.assertEquals(newUser.getUserName(), adminPage.getValueOnTableCell(1, 2));
-        Assert.assertEquals(newUser.getUserRole(), adminPage.getValueOnTableCell(1, 3));
+        Assert.assertEquals(newUser.getUserName(), adminPage.getTableCellText(1, 2));
+        Assert.assertEquals(newUser.getUserRole(), adminPage.getTableCellText(1, 3));
         // employee name not middle name in results
         String employeeNameWithoutMiddle = adminPage.removeMiddleName(newUser.getEmployeeName());
-        Assert.assertEquals(employeeNameWithoutMiddle, adminPage.getValueOnTableCell(1, 4));
-        Assert.assertEquals(newUser.getStatus(), adminPage.getValueOnTableCell(1, 5));
+        Assert.assertEquals(employeeNameWithoutMiddle, adminPage.getTableCellText(1, 4));
+        Assert.assertEquals(newUser.getStatus(), adminPage.getTableCellText(1, 5));
     }
 
     // [REFACTOR] MỚI: dọn dữ liệu test - xóa user vừa tạo (bảng đang lọc còn đúng dòng của user đó).

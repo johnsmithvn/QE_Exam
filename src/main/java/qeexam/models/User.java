@@ -1,4 +1,6 @@
-package models;
+package qeexam.models;
+
+// [REFACTOR] ĐỔI PACKAGE: models -> qeexam.models (tên package Java viết thường toàn bộ, nằm dưới package gốc qeexam).
 
 /**
  * [REFACTOR] MỚI - tách từ inner class AdminPageObject.User (code cũ vẫn giữ, đã comment trong AdminPageObject).

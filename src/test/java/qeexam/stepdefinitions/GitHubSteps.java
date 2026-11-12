@@ -1,4 +1,6 @@
-package stepDefinitions;
+package qeexam.stepdefinitions;
+
+// [REFACTOR] ĐỔI PACKAGE: stepDefinitions -> qeexam.stepdefinitions (tên package Java viết thường toàn bộ, nằm dưới package gốc qeexam).
 
 import java.util.List;
 // [REFACTOR] CŨ: không còn dùng Map sau khi chuyển sang POJO Repo.
@@ -6,9 +8,9 @@ import java.util.List;
 
 import org.junit.Assert;
 
-import API.GitHubApi;
-import API.Repo;
-import API.RepoResult;
+import qeexam.api.GitHubApi;
+import qeexam.api.Repo;
+import qeexam.api.RepoResult;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
