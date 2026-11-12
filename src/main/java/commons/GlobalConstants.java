@@ -3,7 +3,10 @@ package commons;
 public class GlobalConstants {
 
 
-    public static final String PAGE_URL = "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login";
+    // [REFACTOR] CŨ: URL trang test nằm cứng trong code.
+    // public static final String PAGE_URL = "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login";
+    // [REFACTOR] MỚI: chuyển sang key "ui.url" trong src/test/resources/config.properties (đọc bằng ConfigReader)
+    // để đổi môi trường không phải sửa code.
 
     public static final String GITHUB_API_URL = "https://api.github.com";
 

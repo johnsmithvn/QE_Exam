@@ -19,11 +19,14 @@
 2. **Configure GitHub Token (for API tests)**
    - Create a Personal Access Token at: https://github.com/settings/tokens
    - Select scope: `public_repo` (read access to public repositories)
-   - Open `github.properties` file in the project root
+   - Copy the file `github.properties example` in the project root to `github.properties`
+     (this file is git-ignored, so the token is never committed)
    - Replace `YOUR_GITHUB_TOKEN_HERE` with your actual token:
      ```properties
      github.token=ghp_xxxxxxxxxxxxxxxxxxxxx
      ```
+   - Alternatively, set the environment variable `GITHUB_TOKEN` (it takes priority over the file)
+   - Without a token the API test still runs, but GitHub limits unauthenticated calls to 60 requests/hour
 
 3. **Install dependencies**
    ```bash
@@ -37,12 +40,38 @@
 Run the UI test scenario for adding and searching a new user:
 
 ```bash
-mvn clean test -Dcucumber.options="--tags @exam_01"
+mvn clean test -Dcucumber.filter.tags="@exam_01"
 ```
-OR
-``` bash
-mvn clean test -Dcucumber.options="--tags @exam_02"
 
+Run the API test scenario for the GitHub organization analysis:
+
+```bash
+mvn clean test -Dcucumber.filter.tags="@exam_02"
+```
+
+Run everything (no tag filter):
+
+```bash
+mvn clean test
+```
+
+Other tags: `@ui` (all UI scenarios), `@api` (all API scenarios).
+
+### Configuration
+
+UI test settings live in `src/test/resources/config.properties` and can be overridden on the command line:
+
+| Key | Meaning |
+|---|---|
+| `ui.url` | Login page URL of the site under test |
+| `ui.username` / `ui.password` | Account used to log in |
+| `chrome.args` | Extra Chrome arguments, comma separated (command line only) |
+| `github.api.url` | GitHub API base URL (command line only, default `https://api.github.com`) |
+
+Example - run the UI test headless:
+
+```bash
+mvn clean test -Dcucumber.filter.tags="@exam_01" -Dchrome.args=--headless=new,--window-size=1920,1080
 ```
 
 ### Option 2: Run via Eclipse IDE
@@ -60,10 +89,10 @@ mvn clean test -Dcucumber.options="--tags @exam_02"
    - Tests will execute and results will appear in JUnit view
 
 3. **Run specific scenario:**
-   - Open `TestRunner.java`
-   - Change `tags` parameter:
-     - For UI test: `tags = "@exam_01"`
-     - For API test: `tags = "@exam_02"`
+   - `TestRunner.java` has no hard-coded tag, so it runs every scenario by default
+   - To run one scenario: Run As → Run Configurations… → Arguments → VM arguments, then add
+     - For UI test: `-Dcucumber.filter.tags="@exam_01"`
+     - For API test: `-Dcucumber.filter.tags="@exam_02"`
 
 
 ## Test Execution Results
@@ -83,23 +112,29 @@ Stars: XXXXX
 ============================================
 ```
 
+The API test also asserts that the highest-rated repository is `selenium` and that the number of
+repositories fetched matches the organization's `public_repos` count.
+
 **For UI tests (@exam_01):**
 - User creation success message
 - Search results verification
+- The created user is deleted again (test data clean-up)
 - All assertions passed
 
 ### Test Report
 
 View the detailed Cucumber HTML report:
 
-1. Open `target/cucumber-html-report/index.html` in a browser
-2. Or view JSON report at `target/site/test.json`
+1. Open `target/report/index.html` in a browser
+2. Or view JSON report at `target/site/cucumber.json`
+3. For the richer report, run `mvn clean verify` (instead of `test`) and open
+   `target/site/cucumber-html/cucumber-html-reports/overview-features.html`
 
 **Test Report includes:**
 - Scenario pass/fail status
 - Step-by-step execution details
 - Execution time
-- Screenshots (if configured)
+- Screenshot of the browser when a UI scenario fails
 
 
 ## Technologies Used

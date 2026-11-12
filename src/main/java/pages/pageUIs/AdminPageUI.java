@@ -21,6 +21,8 @@ public class AdminPageUI {
     public static final String TABLE_CELL = "(//div[@class='oxd-table-body']//div[@role='row'])[%s]/div[@role='cell'][%s]/div";
     public static final String TABLE_SPINNER = "//div[@class='oxd-table-loader']//div[@class='oxd-loading-spinner']";
     public static final String FILTER_USER_NAME_INPUT = "//div[@class='oxd-table-filter']//label[text()='Username']/parent::div/following-sibling::div/input";
+    // [REFACTOR] MỚI: nút xóa (icon thùng rác) ở dòng đầu của bảng, dùng cho bước dọn dữ liệu test.
+    public static final String FIRST_ROW_DELETE_BUTTON = "(//div[@class='oxd-table-body']//div[@role='row'])[1]//button[i[contains(@class,'bi-trash')]]";
 
 
 }
